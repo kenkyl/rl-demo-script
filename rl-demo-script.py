@@ -9,30 +9,38 @@ def main():
     host2 = '172.31.20.132'
     port2 = 16055
 
-    print("starting redis reads!")
-
+    print("starting inserts to redis-server-1")
     # open connection to os server to read data
     r1 = redis.Redis(
         host=host1,
         port=port1
     )
 
-    # get two keys from enterprise server 
-    print('fetching test key 1: ', r1.get('memtier-474195'))
-    print('fetching test key 2: ', r1.get('memtier-2703924'))
+    num_keys = 100
+    keys = []
+
+    # insert #s 1-100 into os db
+    for i in range(1, num_keys+1):
+        key = "key-" + str(i)
+        keys.append(key)
+        r1.set(key, i)
+
+    print('inserts complete. starting reads from redis-server-2')
 
     # open connection to enterprise server to read data
-    r2 = redis.Redis(
-        host=host2,
-        port=port2
-    )
+    # r2 = redis.Redis(
+    #     host=host2,
+    #     port=port2
+    # )
 
-    # get two keys from enterprise server 
-    print('fetching test key 1: ', r2.get('memtier-474195'))
-    print('fetching test key 2: ', r2.get('memtier-2703924'))
+    # for i in range()
 
-    r1.set('test-script-in1', 'found me!')
-    print('fetching test insert key: ', r2.get('test-script-in1'))
+    # # get two keys from enterprise server 
+    # print('fetching test key 1: ', r2.get('memtier-474195'))
+    # print('fetching test key 2: ', r2.get('memtier-2703924'))
+
+    # r1.set('test-script-in1', 'found me!')
+    # print('fetching test insert key: ', r2.get('test-script-in1'))
 
 
 
