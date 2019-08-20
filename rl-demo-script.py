@@ -11,7 +11,7 @@ def main():
 
     print("starting redis reads!")
 
-    # open connection to enterprise server to read data
+    # open connection to os server to read data
     r1 = redis.Redis(
         host=host1,
         port=port1
@@ -30,6 +30,9 @@ def main():
     # get two keys from enterprise server 
     print('fetching test key 1: ', r2.get('memtier-474195'))
     print('fetching test key 2: ', r2.get('memtier-2703924'))
+
+    r1.set('test-script-in1', 'found me!')
+    print('fetching test insert key: ', r2.get('test-script-in1'))
 
 
 
