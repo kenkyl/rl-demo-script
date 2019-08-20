@@ -37,7 +37,7 @@ def main():
 
     # read vaules 100-1 from es db
     for i in range(num_keys, 0, -1):
-        print(str(r2.get(keys[i-1].encode()), 'utf-8'))
+        print(str(r2.get(keys[i-1]), 'utf-8'))
 
     print('reads complete. exiting')
 
