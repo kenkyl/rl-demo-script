@@ -35,7 +35,7 @@ def main():
 
     print('reads complete. deleting key and exiting')
 
-    # delete key for repeated
+    # delete key for repeated tests
     r1.delete("key-list")
 
 if __name__ == '__main__':
