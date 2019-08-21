@@ -15,17 +15,12 @@ def main():
         port=port1
     )
 
-    # define number of keys and array to hold them
-    num_keys = 100
-    keys = []
-
     print("starting inserts to redis-server-1")
 
-    # insert #s 1-100 into os db
+    # define number of keys and push onto list in os db
+    num_keys = 100
     for i in range(1, num_keys+1):
-        key = "key-" + str(i)
-        keys.append(key)
-        r1.set(key, i)
+        r1.lpush("key-list", i)
 
     print('inserts complete. starting reads from redis-server-2')
 
@@ -35,11 +30,13 @@ def main():
         port=port2
     )
 
-    # read vaules 100-1 from es db
-    for i in range(num_keys, 0, -1):
-        print(str(r2.get(keys[i-1]), 'utf-8'))
+    # read vaules 100-1 from list in es db
+    print(r2.lrange("key-list", 0, -1))
 
-    print('reads complete. exiting')
+    print('reads complete. deleting key and exiting')
+
+    # delete key for repeated
+    r1.delete("key-list")
 
 if __name__ == '__main__':
     main()
